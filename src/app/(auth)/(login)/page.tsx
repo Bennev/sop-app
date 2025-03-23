@@ -1,28 +1,58 @@
 "use client"
 
 import { ChangeEvent, useMemo, useState } from "react";
-import { IconButton, InputAdornment, TextField } from "@mui/material";
-import { StyledButton, StyledContainer, StyledFooter, StyledLink, StyledTextFields, StyledTitle } from "./styles";
+import { CircularProgress, IconButton, InputAdornment, TextField } from "@mui/material";
+import { StyledButton, StyledContainer, StyledFooter, StyledLink, StyledTextFields, StyledTitle } from "../styles";
 import { TLogin } from "@/types/TLogin";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
+import { useSnackbar } from "notistack";
+import postLogin from "@/services/auth/postLogin";
+import { useRouter } from "next/navigation";
+import { useDispatch } from "react-redux";
+import { login } from "@/redux/features/authSlice";
 
 export default function Home() {
-  const [login, setLogin] = useState<TLogin>({
+  const router = useRouter();
+  const { enqueueSnackbar } = useSnackbar();
+  const dispatch = useDispatch();
+  const [auth, setAuth] = useState<TLogin>({
     login: "",
     password: "",
   })
   const [showPassword, setShowPassword] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleClickShowPassword = () => setShowPassword((prev) => !prev);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
-    setLogin((prev) => ({ ...prev, [name]: value }));
+    setAuth((prev) => ({ ...prev, [name]: value }));
+  }
+
+  const handleLogin = async () => {
+    try {
+      const response = await postLogin({ login: auth.login, password: auth.password })
+      if (!response) {
+        enqueueSnackbar('Usuário ou senha inválidos', { variant: 'error' });
+        return;
+      }
+      dispatch(login({
+        accessToken: response.token,
+        name: response.name,
+        login: response.login,
+      }))
+      return;
+      router.push('/expenses');
+    } catch {
+      enqueueSnackbar('Erro ao realizar login', { variant: 'error' });
+    } finally {
+      setIsLoading(false);
+    }
   }
 
   const isDisable = useMemo(() => {
-      return !login.login || !login.password;
-    }, [login]);
+    return !auth.login || !auth.password || isLoading;
+  }, [auth, isLoading]);
 
   return (
     <StyledContainer>
@@ -56,10 +86,10 @@ export default function Home() {
       </StyledTextFields>
       <StyledButton
         variant="contained"
-        onClick={() => {}}
+        onClick={() => handleLogin()}
         disabled={isDisable}
       >
-        Entrar
+        {isLoading ? <CircularProgress color="inherit" size={30} /> : 'Entrar'}
       </StyledButton>
       <StyledFooter>
         Não tem conta?

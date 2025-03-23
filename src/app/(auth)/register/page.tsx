@@ -1,23 +1,28 @@
 "use client"
 
 import { ChangeEvent, useMemo, useState } from "react";
-import { Alert, IconButton, InputAdornment, TextField } from "@mui/material";
+import { Alert, CircularProgress, IconButton, InputAdornment, TextField } from "@mui/material";
 import { StyledLink, StyledButton, StyledContainer, StyledFooter, StyledTextFields, StyledTitle } from "../styles";
 import { TRegister } from "@/types/TRegister";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
+import { useSnackbar } from "notistack";
+import postRegister from "@/services/auth/postRegister";
+import { useRouter } from "next/navigation";
 
 export default function Register() {
+  const router = useRouter();
+  const { enqueueSnackbar } = useSnackbar();
   const [register, setRegister] = useState<TRegister>({
     name: "",
     login: "",
     password: "",
     confirmPassword: "",
   })
-
   const [showPassword, setShowPassword] = useState({
     password: false,
     confirmPassword: false,
   });
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleClickShowPassword = (field: "password" | "confirmPassword") => {
     setShowPassword((prev) => ({ ...prev, [field]: !prev[field] }));
@@ -28,6 +33,28 @@ export default function Register() {
     setRegister((prev) => ({ ...prev, [name]: value }));
   }
 
+  const handleRegister = async () => {
+      if (!register.login.includes('@')) {
+        enqueueSnackbar('Email inválido', { variant: 'error' });
+        return;
+      }
+      try {
+        const response = await postRegister({
+          name: register.name,
+          login: register.login,
+          password: register.password,
+          enqueueSnackbar,
+        })
+        if (!response) return;
+        enqueueSnackbar('Cadastro realizado com sucesso', { variant: 'success' });
+        router.push('/');
+      } catch {
+        enqueueSnackbar('Erro ao realizar login', { variant: 'error' });
+      } finally {
+        setIsLoading(false);
+      }
+    }
+
   const isValidPassword = useMemo(() => {
     if (!register.password || !register.confirmPassword) {
       return true;
@@ -36,8 +63,13 @@ export default function Register() {
   }, [register.password, register.confirmPassword]);
 
   const isDisable = useMemo(() => {
-    return !register.name || !register.login || !register.password || !register.confirmPassword || !isValidPassword;
-  }, [register, isValidPassword]);
+    return !register.name ||
+    !register.login ||
+    !register.password ||
+    !register.confirmPassword ||
+    !isValidPassword ||
+    isLoading;
+  }, [register, isValidPassword, isLoading]);
 
   return (
     <StyledContainer>
@@ -99,10 +131,10 @@ export default function Register() {
       </StyledTextFields>
       <StyledButton
         variant="contained"
-        onClick={() => {}}
+        onClick={() => handleRegister()}
         disabled={isDisable}
       >
-        Criar conta
+        {isLoading ? <CircularProgress color="inherit" size={30} /> : 'Criar conta'}
       </StyledButton>
       <StyledFooter>
         Ja tem uma conta?

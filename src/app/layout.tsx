@@ -1,12 +1,6 @@
-"use client"
 import { Lexend } from "next/font/google";
-import StyledJsxRegistry from "./registry";
-import GlobalStyle from '@/assets/styles/global'
-import { LocalizationProvider } from "@mui/x-date-pickers";
-import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFnsV3'
-import { createTheme, ThemeProvider } from "@mui/material";
-import { MuiTheme } from "@/assets/styles/theme";
 import { StyledMain } from "./styles";
+import { Providers } from "@/providers/provider";
 
 const lexend = Lexend({
   weight: ['400', '500', '600', '700'],
@@ -18,7 +12,6 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const theme = createTheme(MuiTheme);
   return (
     <html lang="pt-BR">
       <head>
@@ -30,16 +23,11 @@ export default function RootLayout({
         <title>Sistema de Despesas</title>
       </head>
       <body className={lexend.className}>
-        <ThemeProvider theme={theme}>
-          <LocalizationProvider dateAdapter={AdapterDateFns}>
-            <StyledJsxRegistry>
-              <GlobalStyle />
-              <StyledMain>
-                {children}
-              </StyledMain>
-            </StyledJsxRegistry>
-          </LocalizationProvider>
-        </ThemeProvider>
+        <Providers>
+          <StyledMain>
+            {children}
+          </StyledMain>
+        </Providers>
       </body>
     </html>
   );
