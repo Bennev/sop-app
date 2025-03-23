@@ -1,9 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from "react";
 import { Button, Dialog, DialogActions, DialogTitle, FormControl, InputLabel, MenuItem, Select, TextField } from "@mui/material";
-import { EExpenseType, TExpense } from "./types";
 import { DatePicker } from "@mui/x-date-pickers";
 import { StyledDates, StyledDialogContent } from "./styles";
+import { TExpense } from "@/types/TExpense";
+import { EExpenseType } from "@/enums/EExpenseType";
 
 const AddExpense = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -22,7 +23,7 @@ const AddExpense = () => {
     setExpense({ ...expense, [name]: value });
   }
 
-  const handleDateChange = (date: any, name: string) => {
+  const handleDateChange = (date: Date | null, name: string) => {
     setExpense({ ...expense, [name]: date });
   }
 
