@@ -8,6 +8,7 @@ import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { useSnackbar } from "notistack";
 import postRegister from "@/services/auth/postRegister";
 import { useRouter } from "next/navigation";
+import { TShowPassword } from "@/types/TShowPassword";
 
 export default function Register() {
   const router = useRouter();
@@ -18,11 +19,11 @@ export default function Register() {
     password: "",
     confirmPassword: "",
   })
-  const [showPassword, setShowPassword] = useState({
+  const [showPassword, setShowPassword] = useState<TShowPassword>({
     password: false,
     confirmPassword: false,
   });
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const handleClickShowPassword = (field: "password" | "confirmPassword") => {
     setShowPassword((prev) => ({ ...prev, [field]: !prev[field] }));

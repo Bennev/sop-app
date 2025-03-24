@@ -19,8 +19,8 @@ export default function Home() {
     login: "",
     password: "",
   })
-  const [showPassword, setShowPassword] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const handleClickShowPassword = () => setShowPassword((prev) => !prev);
 
@@ -41,7 +41,6 @@ export default function Home() {
         name: response.name,
         login: response.login,
       }))
-      return;
       router.push('/expenses');
     } catch {
       enqueueSnackbar('Erro ao realizar login', { variant: 'error' });

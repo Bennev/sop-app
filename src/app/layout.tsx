@@ -1,6 +1,7 @@
 import { Lexend } from "next/font/google";
 import { StyledMain } from "./styles";
 import { Providers } from "@/providers/provider";
+import { ReactNode } from "react";
 
 const lexend = Lexend({
   weight: ['400', '500', '600', '700'],
@@ -10,7 +11,7 @@ const lexend = Lexend({
 export default function RootLayout({
   children,
 }: Readonly<{
-  children: React.ReactNode;
+  children: ReactNode;
 }>) {
   return (
     <html lang="pt-BR">

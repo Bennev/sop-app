@@ -23,7 +23,7 @@ export const StyledContainer = styled.div`
 export const StyledTitle = styled.h1`
   margin: 0;
   font-size: 2rem;
-  color: #0942FF;
+  color: #00501b;
 `;
 
 export const StyledTextFields = styled.div`
@@ -49,7 +49,7 @@ export const StyledFooter = styled.h2`
 `;
 
 export const StyledLink = styled(Link)`
-  color: #0088ce;
+  color: #00bd19;
   text-decoration: none;
 
   &:hover{

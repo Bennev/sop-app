@@ -1,12 +1,12 @@
 "use client";
 
+import { createRef, ReactNode } from "react";
 import { ThemeProvider, createTheme } from "@mui/material";
 import { muiTheme } from "@/assets/styles/theme";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFnsV3";
 import { Provider } from "react-redux";
 import { SnackbarKey, SnackbarProvider } from "notistack";
-import { createRef } from "react";
 import { IconButton } from "@mui/material";
 import { Close } from "@mui/icons-material";
 import StyledJsxRegistry from "@/providers/registry";
@@ -19,7 +19,7 @@ const snackbarProviderRef = createRef<SnackbarProvider>();
 const handleDismissSnackbar = (key: SnackbarKey) =>
   snackbarProviderRef?.current?.closeSnackbar(key);
 
-export function Providers({ children }: { children: React.ReactNode }) {
+export function Providers({ children }: { children: ReactNode }) {
   return (
     <ThemeProvider theme={theme}>
       <Provider store={store}>
