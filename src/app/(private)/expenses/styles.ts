@@ -1,12 +1,16 @@
 "use client"
 import styled from "styled-components";
 
+export const StyledLoading = styled.div`
+    width: 100%;
+    display: flex;
+    justify-content: center;
+`;
+
 export const StyledContainer = styled.div`
   margin: 20px;
-  height: 100%;
   display: flex;
   flex-direction: column;
-  align-self: flex-start;
   gap: 20px;
 `;
 
@@ -30,8 +34,13 @@ export const StyledSpan = styled.span`
   color: #00501b;
 `;
 
-export const StyledSubTitle = styled.h1`
+export const StyledInfoTopic = styled.h2`
+  max-width: 500px;
   margin: 0;
   font-size: 1rem;
-  color: black;
+`;
+
+export const StyledInfoDetail = styled.span`
+  font-weight: 400;
+  word-wrap: break-word;
 `;

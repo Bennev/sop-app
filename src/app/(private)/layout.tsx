@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { ReactNode, useEffect } from "react";
 import NavBar from "@/components/Navbar/Navbar";
 import { useSelector } from "react-redux";
+import { StyledPage } from "./styles";
 
 export default function PrivateRoute({ children }: { children: ReactNode }) {
   const accessToken = useSelector((state: RootState) => state.auth.accessToken);
@@ -21,7 +22,9 @@ export default function PrivateRoute({ children }: { children: ReactNode }) {
   return (
     <>
       <NavBar />
-      {children}
+      <StyledPage>
+        {children}
+      </StyledPage>
     </>
   )
 }

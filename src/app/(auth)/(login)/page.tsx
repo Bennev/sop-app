@@ -9,7 +9,7 @@ import { useSnackbar } from "notistack";
 import postLogin from "@/services/auth/postLogin";
 import { useRouter } from "next/navigation";
 import { useDispatch } from "react-redux";
-import { login } from "@/redux/features/authSlice";
+import { authActions } from "@/redux/features/authSlice";
 
 export default function Home() {
   const router = useRouter();
@@ -36,7 +36,7 @@ export default function Home() {
         enqueueSnackbar('Usuário ou senha inválidos', { variant: 'error' });
         return;
       }
-      dispatch(login({
+      dispatch(authActions.login({
         accessToken: response.token,
         name: response.name,
         login: response.login,

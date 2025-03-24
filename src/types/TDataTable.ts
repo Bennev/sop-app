@@ -1,3 +1,4 @@
+import { Dispatch, SetStateAction } from "react";
 import { TExpense } from "./TExpense";
 
 export type TDataTable = {
@@ -7,6 +8,11 @@ export type TDataTable = {
     label: string;
   }[];
   data: TExpense[];
+  totalPages: number;
+  page: number;
+  setPage: Dispatch<SetStateAction<number>>;
+  labelAddButton: string;
+  handleAdd: () => void;
   handleView: (id: number) => void;
   handleDelete: (id: number) => void;
 }

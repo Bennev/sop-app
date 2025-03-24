@@ -1,4 +1,4 @@
-import { TableCell } from "@mui/material";
+import { Button, Pagination, TableCell } from "@mui/material";
 import styled, { css } from "styled-components";
 
 export const StyledContainer = styled.div`
@@ -7,9 +7,19 @@ export const StyledContainer = styled.div`
   gap: 10px;
 `;
 
+export const StyledHeader = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`;
+
 export const StyledLabel = styled.h2`
   margin: 0;
   font-size: 1.5rem;
+`;
+
+export const StyledButton = styled(Button)`
+  height: 40px;
 `;
 
 export const StyledTableCell = styled(TableCell)<{cell_key: string}>`
@@ -29,4 +39,9 @@ export const StyledTableCell = styled(TableCell)<{cell_key: string}>`
   ${({ cell_key }) => cell_key === 'due_date' && css`
     max-width: 200px;
   `}
+`;
+
+export const StyledPagination = styled(Pagination)`
+  display: flex;
+  align-self: center;
 `;

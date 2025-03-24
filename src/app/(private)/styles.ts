@@ -1,18 +1,8 @@
 import styled from "styled-components";
-import { Button } from "@mui/material";
 
-export const StyledAppBarContainer = styled.div`
-  padding: 10px 20px;
+export const StyledPage = styled.div`
+  width: 100%;
   display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-
-  .MuiButton-root {
-    text-transform: none;
-  }
-`;
-
-export const StyledButton = styled(Button)`
-  height: 40px;
+  align-self: flex-start;
+  padding-top: 60px;
 `;

@@ -7,5 +7,7 @@ export type TExpense = {
   due_date: string;
   creditor: string;
   description: string;
-  value: string;
+  value: number;
 }
+
+export type TExpenseWithoutId = Omit<TExpense, 'id'>;

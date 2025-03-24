@@ -1,12 +1,18 @@
 import { TDataTable } from "@/types/TDataTable";
 import { Table, TableBody, TableContainer, TableHead, TableRow } from "@mui/material";
-import { StyledContainer, StyledLabel, StyledTableCell } from "./styles";
+import { StyledButton, StyledContainer, StyledHeader, StyledLabel, StyledPagination, StyledTableCell } from "./styles";
 import DataTableCell from "../DataTableCell/DataTableCell";
+import { Add } from "@mui/icons-material";
 
 const DataTable = ({
   label,
   columns,
   data,
+  totalPages,
+  page,
+  setPage,
+  labelAddButton,
+  handleAdd,
   handleView,
   handleDelete,
 }: TDataTable) => {
@@ -18,7 +24,17 @@ const DataTable = ({
 
   return (
     <StyledContainer>
-      <StyledLabel>{label}</StyledLabel>
+      <StyledHeader>
+        <StyledLabel>{label}</StyledLabel>
+        <StyledButton
+          variant="contained"
+          color="success"
+          startIcon={<Add />}
+          onClick={handleAdd}
+        >
+          {labelAddButton}
+        </StyledButton>
+      </StyledHeader>
       <TableContainer>
         <Table>
           <TableHead>
@@ -71,6 +87,12 @@ const DataTable = ({
           </TableBody>
         </Table>
       </TableContainer>
+      <StyledPagination
+        color="primary"
+        count={totalPages}
+        page={page + 1}
+        onChange={(_, page) => setPage(page - 1)}
+      />
     </StyledContainer>
   )
 

@@ -53,7 +53,7 @@ const DataTableCell = ({
     return <StyledInfo>R$ {number.toFixed(2).replace(".", ",")}</StyledInfo>;
   }
 
-  return <StyledInfo>{value}</StyledInfo>;
+  return <StyledInfo>{String(value)}</StyledInfo>;
 }
 
 export default DataTableCell;

@@ -4,11 +4,12 @@ import Link from "next/link";
 import styled from "styled-components";
 
 export const StyledContainer = styled.div`
-  min-width: 500px;
+  width: 500px;
   padding: 20px 40px;
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   gap: 40px;
 
   background-color: #FFFFFF;

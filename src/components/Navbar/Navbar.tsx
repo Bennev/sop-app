@@ -1,10 +1,9 @@
 "use client"
 
-import { AppBar } from "@mui/material";
-import { StyledAppBarContainer, StyledButton } from "./styles";
+import { StyledAppBar, StyledAppBarContainer, StyledButton } from "./styles";
 import { Home, Logout } from "@mui/icons-material";
 import { useDispatch } from "react-redux";
-import { logout } from "@/redux/features/authSlice";
+import { authActions } from "@/redux/features/authSlice";
 import { useRouter } from "next/navigation";
 
 const NavBar = () => {
@@ -12,31 +11,31 @@ const NavBar = () => {
   const dispatch = useDispatch();
 
   const handleLogout = () => {
-      dispatch(logout());
+      dispatch(authActions.logout());
       router.push("/");
     };
 
   return (
-    <AppBar position="static">
+    <StyledAppBar>
       <StyledAppBarContainer>
         <StyledButton
-          variant="outlined"
-          color="inherit"
+          variant="contained"
+          color="warning"
           startIcon={<Home />}
           onClick={() => router.push("/expenses")}
         >
           Início
         </StyledButton>
         <StyledButton
-          variant="outlined"
-          color="inherit"
+          variant="contained"
+          color="warning"
           startIcon={<Logout />}
           onClick={() => handleLogout()}
         >
           Sair
         </StyledButton>
       </StyledAppBarContainer>
-    </AppBar>
+    </StyledAppBar>
   )
 }
 export default NavBar;
