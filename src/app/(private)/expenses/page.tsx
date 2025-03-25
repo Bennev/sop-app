@@ -18,7 +18,7 @@ import AddExpenseModal from "@/components/AddExpenseModal/AddExpenseModal";
 
 export default function Expenses() {
   const columns: TExpenseColumns[] = [
-    { key: 'id', label: 'Nº do Protocolo' },
+    { key: 'protocol_number', label: 'Nº do Protocolo' },
     { key: 'type', label: 'Tipo' },
     { key: 'protocol_date', label: 'Data do Protocolo' },
     { key: 'due_date', label: 'Data de Vencimento' },

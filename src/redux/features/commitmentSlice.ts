@@ -6,6 +6,7 @@ const initialState: TCommitmentOrPayment = {
   date: '',
   value: 0,
   note: '',
+  commitment_number: '',
 }
 
 export const commitmentSlice = createSlice({
@@ -17,6 +18,7 @@ export const commitmentSlice = createSlice({
       state.date = action.payload.date;
       state.value = action.payload.value;
       state.note = action.payload.note;
+      state.commitment_number = action.payload.commitment_number;
     }
   },
 })

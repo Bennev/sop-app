@@ -17,7 +17,7 @@ import AddModal from "@/components/AddModal/AddModal";
 
 export default function CommitmentDetails() {
   const columns: TCommitmentOrPaymentColumns[] = [
-    { key: 'id', label: 'Nº do Pagamento' },
+    { key: 'payment_number', label: 'Nº do Pagamento' },
     { key: 'date', label: 'Data' },
     { key: 'value', label: 'Valor' },
     { key: 'note', label: 'Observação' },
@@ -72,7 +72,7 @@ export default function CommitmentDetails() {
           <StyledSection>
             <StyledTitle>
               {'Empenho: '}
-              <StyledInfoDetail>{commitment.id}</StyledInfoDetail>
+              <StyledInfoDetail>{commitment.commitment_number}</StyledInfoDetail>
               
             </StyledTitle>
             <StyledInfoTopic>

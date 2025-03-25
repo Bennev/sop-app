@@ -8,7 +8,7 @@ import { RootState } from "@/redux/store";
 import { TAddModal } from "@/types/TAddModal";
 import postCommitment from "@/services/commitment/postCommitment";
 import { StyledDialogContent } from "./styles";
-import { TCommitmentOrPaymentWithoutId } from "@/types/TCommitmentOrPayment";
+import { TCommitmentOrPaymentWithoutIdAndNumber } from "@/types/TCommitmentOrPayment";
 import postPayment from "@/services/payment/postPayment";
 const AddModal = ({
   entity,
@@ -19,7 +19,7 @@ const AddModal = ({
 }: TAddModal) => {
   const { enqueueSnackbar } = useSnackbar();
   const { accessToken } = useSelector((state: RootState) => state.auth);
-  const [commitmentOrPayment, setCommitment] = useState<TCommitmentOrPaymentWithoutId>({
+  const [commitmentOrPayment, setCommitmentOrPayment] = useState<TCommitmentOrPaymentWithoutIdAndNumber>({
     date: '',
     value: 0,
     note: '',
@@ -29,11 +29,11 @@ const AddModal = ({
   const handleChange = (e: any) => {
     const { name, value } = e.target;
     const formattedValue = name === 'value' ? Number(value) : value;
-    setCommitment((prev) => ({ ...prev, [name]: formattedValue }));
+    setCommitmentOrPayment((prev) => ({ ...prev, [name]: formattedValue }));
   }
 
   const handleDateChange = (date: Date | null, name: string) => {
-    setCommitment((prev) => ({ ...prev, [name]: date }));
+    setCommitmentOrPayment((prev) => ({ ...prev, [name]: date }));
   }
 
   const handleAdd = async () => {
@@ -41,7 +41,7 @@ const AddModal = ({
 
     const errors = [
       commitmentOrPayment.value <= 0 || String(commitmentOrPayment.value) === '',
-      !commitmentOrPayment.date,
+      !commitmentOrPayment.date || isNaN(new Date(commitmentOrPayment.date).getTime()),
     ]
     if(errors.some((error) => error)) return enqueueSnackbar('Preencha os campos em vermelho corretamente', { variant: 'error' });
     const response = entity === 'Empenho' ? 
@@ -57,7 +57,7 @@ const AddModal = ({
     if (!response) return;
     await refreshData();
     setOpen(false);
-    setCommitment({
+    setCommitmentOrPayment({
       date: '',
       value: 0,
       note: '',
@@ -67,7 +67,7 @@ const AddModal = ({
 
   const handleClose = () => {
     setOpen(false);
-    setCommitment({
+    setCommitmentOrPayment({
       date: '',
       value: 0,
       note: '',
@@ -102,14 +102,22 @@ const AddModal = ({
           label="Valor"
           variant="outlined"
           onChange={handleChange}
-          {...getErrorHelperText(commitmentOrPayment.value, (value) => Number(value) <= 0 || value === "", "O valor deve ser positivo")}
+          {...getErrorHelperText(
+            commitmentOrPayment.value,
+            (value) => Number(value) <= 0 || value === "",
+            "O valor deve ser positivo"
+          )}
         />
         <DatePicker
           label="Data"
           onChange={(e) => handleDateChange(e, 'date')}
           slotProps={{
             textField: {
-              ...getErrorHelperText(commitmentOrPayment.date, (date) => !date, "A data é obrigatória"),
+              ...getErrorHelperText(
+                commitmentOrPayment.date,
+                (date) => !date || isNaN(new Date(date).getTime()),
+                "A data é obrigatória e precisa ser válida"
+              ),
             }
           }}  
         />

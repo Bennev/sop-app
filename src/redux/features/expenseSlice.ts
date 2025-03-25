@@ -10,6 +10,7 @@ const initialState: TExpense = {
   creditor: '',
   value: 0,
   description: '',
+  protocol_number: '',
 }
 
 export const expenseSlice = createSlice({
@@ -24,6 +25,7 @@ export const expenseSlice = createSlice({
       state.creditor = action.payload.creditor;
       state.value = action.payload.value;
       state.description = action.payload.description;
+      state.protocol_number = action.payload.protocol_number;
     }
   },
 })

@@ -20,7 +20,7 @@ import AddModal from "@/components/AddModal/AddModal";
 
 export default function ExpenseDetails() {
   const columns: TCommitmentOrPaymentColumns[] = [
-    { key: 'id', label: 'Nº do Empenho' },
+    { key: 'commitment_number', label: 'Nº do Empenho' },
     { key: 'date', label: 'Data' },
     { key: 'value', label: 'Valor' },
     { key: 'note', label: 'Observação' },
@@ -91,7 +91,7 @@ export default function ExpenseDetails() {
           <StyledSection>
             <StyledTitle>
               {'Despesa: '}
-              <StyledInfoDetail>{expense.id}</StyledInfoDetail>
+              <StyledInfoDetail>{expense.protocol_number}</StyledInfoDetail>
               
             </StyledTitle>
             <StyledInfoRow>

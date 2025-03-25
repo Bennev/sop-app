@@ -8,6 +8,7 @@ export type TExpense = {
   creditor: string;
   description: string;
   value: number;
+  protocol_number: string;
 }
 
-export type TExpenseWithoutId = Omit<TExpense, 'id'>;
+export type TExpenseWithoutIdAndProtocolNumber = Omit<TExpense, 'id' | 'protocol_number'>;

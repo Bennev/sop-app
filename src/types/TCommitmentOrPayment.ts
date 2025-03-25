@@ -3,6 +3,8 @@ export type TCommitmentOrPayment = {
   date: string;
   value: number;
   note: string;
+  commitment_number?: string;
+  payment_number?: string;
 }
 
-export type TCommitmentOrPaymentWithoutId = Omit<TCommitmentOrPayment, 'id'>;
+export type TCommitmentOrPaymentWithoutIdAndNumber = Omit<TCommitmentOrPayment, 'id' | 'commitment_number' | 'payment_number'>;

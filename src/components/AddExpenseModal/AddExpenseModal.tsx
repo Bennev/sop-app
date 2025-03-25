@@ -3,7 +3,7 @@ import { useState } from "react";
 import { Button, Dialog, DialogActions, DialogTitle, FormControl, InputLabel, MenuItem, Select, TextField } from "@mui/material";
 import { DatePicker, DateTimePicker } from "@mui/x-date-pickers";
 import { StyledDates, StyledDialogContent } from "./styles";
-import { TExpenseWithoutId } from "@/types/TExpense";
+import { TExpenseWithoutIdAndProtocolNumber } from "@/types/TExpense";
 import { EExpenseType } from "@/enums/EExpenseType";
 import { useSnackbar } from "notistack";
 import postExpense from "@/services/expense/postExpense";
@@ -18,7 +18,7 @@ const AddExpenseModal = ({
 }: TAddExpenseModal) => {
   const { enqueueSnackbar } = useSnackbar();
   const { accessToken } = useSelector((state: RootState) => state.auth);
-  const [expense, setExpense] = useState<TExpenseWithoutId>({
+  const [expense, setExpense] = useState<TExpenseWithoutIdAndProtocolNumber>({
     type: EExpenseType.BUILDING_CONSTRUCTION,
     protocol_date: '',
     due_date: '',
@@ -141,7 +141,11 @@ const AddExpenseModal = ({
             }}
             slotProps={{
               textField: {
-                ...getErrorHelperText(expense.protocol_date, (date) => !date, "A data do protocolo é obrigatória"),
+                ...getErrorHelperText(
+                  expense.protocol_date,
+                  (date) => !date || isNaN(new Date(date).getTime()),
+                  "A data do protocolo é obrigatória e precisa ser válida"
+                ),
               }
             }}  
           />
@@ -150,7 +154,11 @@ const AddExpenseModal = ({
             onChange={(e) => handleDateChange(e, 'due_date')}
             slotProps={{
               textField: {
-                ...getErrorHelperText(expense.due_date, (date) => !date, "A data de vencimento é obrigatória"),
+                ...getErrorHelperText(
+                  expense.due_date,
+                  (date) => !date || isNaN(new Date(date).getTime()),
+                  "A data de vencimento é obrigatória e precisa ser válida"
+                ),
               }
             }}  
           />

@@ -1,7 +1,7 @@
-import { TExpense, TExpenseWithoutId } from "@/types/TExpense";
+import { TExpense, TExpenseWithoutIdAndProtocolNumber } from "@/types/TExpense";
 import axios from "axios";
 
-export default async function postExpense(accessToken: string, body: TExpenseWithoutId): Promise<TExpense | null> {
+export default async function postExpense(accessToken: string, body: TExpenseWithoutIdAndProtocolNumber): Promise<TExpense | null> {
   try {
     const { data } = await axios.post(
       `http://localhost:8080/expense`,

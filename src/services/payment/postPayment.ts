@@ -1,10 +1,10 @@
-import { TCommitmentOrPayment, TCommitmentOrPaymentWithoutId } from "@/types/TCommitmentOrPayment";
+import { TCommitmentOrPayment, TCommitmentOrPaymentWithoutIdAndNumber } from "@/types/TCommitmentOrPayment";
 import axios from "axios";
 import { EnqueueSnackbar } from "notistack";
 
 export default async function postPayment(
   accessToken: string,
-  body: TCommitmentOrPaymentWithoutId & { commitment_id: number },
+  body: TCommitmentOrPaymentWithoutIdAndNumber & { commitment_id: number },
   enqueueSnackbar: EnqueueSnackbar,
 ): Promise<TCommitmentOrPayment | null> {
   try {
