@@ -8,12 +8,13 @@ import { TExpense } from "@/types/TExpense";
 import { useEffect, useState } from "react";
 import { useSnackbar } from "notistack";
 import { CircularProgress } from "@mui/material";
-import { TExpenseColumns } from "@/types/TExpenseColumns";
 import findOneExpense from "@/services/expense/findOneExpense";
 import { expenseActions } from "@/redux/features/expenseSlice";
-import findAllExpensesPaginated from "@/services/expense/findAllExpensesPaginated";
 import { useRouter } from "next/navigation";
 import AddExpenseModal from "@/components/Expense/AddExpenseModal/AddExpenseModal";
+import deleteExpense from "@/services/expense/deleteExpense";
+import { TExpenseColumns } from "@/types/TColumns";
+import findAllExpensesPaginated from "@/services/expense/findAllCommitmentsPaginatedByExpense";
 
 export default function Expenses() {
   const columns: TExpenseColumns[] = [
@@ -24,6 +25,7 @@ export default function Expenses() {
     { key: 'creditor', label: 'Credor' },
     { key: 'value', label: 'Valor' },
     { key: 'description', label: 'Descrição' },
+    { key: 'commitment_count', label: 'Qtd de Empenhos' },
   ];
   const user = useSelector((state: RootState) => state.auth);
   const dispatch = useDispatch();
@@ -35,6 +37,21 @@ export default function Expenses() {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [openModal, setOpenModal] = useState<boolean>(false);
 
+  const handleView = async (id: number) => {
+    const response = await findOneExpense({ accessToken: user.accessToken, id });
+    if (!response) return null;
+    dispatch(expenseActions.setExpense(response))
+    router.push(`/expenses/${id}`);
+  }
+
+  const handleDelete = async (id: number) => {
+    const response = await deleteExpense(user.accessToken, id, enqueueSnackbar);
+    if (!response) return null;
+    enqueueSnackbar('Despesa deletada com sucesso', { variant: 'success' });
+    setPage(0);
+    getAllExpensesPaginated();
+  }
+
   const getAllExpensesPaginated = async () => {
     try {
       setIsLoading(true);
@@ -43,7 +60,7 @@ export default function Expenses() {
         page,
       });
       if (!response) return;
-      setExpenses(response.content);
+      setExpenses(response.content as TExpense[]);
       setTotalPages(response.totalPages);
     } catch {
       enqueueSnackbar('Erro ao buscar todas as despesas', { variant: 'error' });
@@ -51,23 +68,10 @@ export default function Expenses() {
       setIsLoading(false);
     }
   };
-
-  const handleView = async (id: number) => {
-    const response = await findOneExpense({ accessToken: user.accessToken, id });
-    if (!response) return null;
-    dispatch(expenseActions.setExpense(response))
-    router.push(`/expenses/${id}`);
-  }
-
-  const handleDelete = () => {
-    //TO DO
-  }
   
   useEffect(() => {
     getAllExpensesPaginated();
   }, [page])
-
-  console.log(page);
 
   return (
     <>
@@ -97,7 +101,7 @@ export default function Expenses() {
               totalPages={totalPages}
               page={page}
               setPage={setPage}
-              labelAddButton="Adicionar Despesa"
+              labelAddButton="Criar Despesa"
               handleAdd={() => setOpenModal(true)}
               handleView={(id: number) => handleView(id)}
               handleDelete={(id: number) => handleDelete(id)}
@@ -107,7 +111,10 @@ export default function Expenses() {
       )}
 
       <AddExpenseModal
-        open={openModal} setOpen={setOpenModal} />
+        open={openModal}
+        setOpen={setOpenModal}
+        refreshData={getAllExpensesPaginated}
+      />
     </>
   )
 }

@@ -3,14 +3,13 @@ import { StyledActionButtons, StyledInfo } from "./styles";
 import { Delete, Visibility } from "@mui/icons-material";
 import { ptBR } from "date-fns/locale";
 import { format } from "date-fns";
-import { TExpense } from "@/types/TExpense";
 import { IconButton, Tooltip } from "@mui/material";
 
 const DataTableCell = ({
   column_key,
   row,
-  handleView,
   handleDelete,
+  handleView,
 }: TDataTableCell) => {
   const typeOptions = {
     BUILDING_CONSTRUCTION: "Obras de Edificação",
@@ -18,16 +17,18 @@ const DataTableCell = ({
     OTHERS: "Outros",
   };
 
-  const value = row[column_key as keyof TExpense];
+  const value = row[column_key as keyof typeof row]; 
 
   if (column_key === "actions") {
     return (
       <StyledActionButtons>
-        <Tooltip title="Visualizar" color="primary" arrow>
-          <IconButton onClick={() => handleView(row.id)}>
-            <Visibility color="primary"/>
-          </IconButton>
-        </Tooltip>
+        {handleView && (
+          <Tooltip title="Visualizar" color="primary" arrow>
+            <IconButton onClick={() => handleView(row.id)}>
+              <Visibility color="primary"/>
+            </IconButton>
+          </Tooltip>
+        )}
         <Tooltip title="Excluir" color="error" arrow>
           <IconButton onClick={() => handleDelete(row.id)}>
             <Delete color="error"/>
@@ -37,14 +38,14 @@ const DataTableCell = ({
     );
   }
 
-  if (["protocol_date", "due_date"].includes(column_key)) {
+  if (["protocol_date", "due_date", "date"].includes(column_key)) {
     const date = new Date(value);
     const dateFormat = column_key === "protocol_date" ? "HH:mm dd/MM/yyyy" : "dd/MM/yyyy";
     return <StyledInfo>{format(date, dateFormat, { locale: ptBR })}</StyledInfo>;
   }
 
-  if (column_key === "type") {
-    const mappedType = typeOptions[value as keyof typeof typeOptions];
+  if (column_key === "type" && "type" in row) {
+    const mappedType = typeOptions[row.type as unknown as keyof typeof typeOptions];
     return <StyledInfo>{mappedType}</StyledInfo>;
   }
 
@@ -53,7 +54,7 @@ const DataTableCell = ({
     return <StyledInfo>R$ {number.toFixed(2).replace(".", ",")}</StyledInfo>;
   }
 
-  return <StyledInfo>{String(value)}</StyledInfo>;
+  return <StyledInfo>{value ?? ''}</StyledInfo>;
 }
 
 export default DataTableCell;

@@ -4,10 +4,11 @@ import { StyledAppBar, StyledAppBarContainer, StyledButton } from "./styles";
 import { Home, Logout } from "@mui/icons-material";
 import { useDispatch } from "react-redux";
 import { authActions } from "@/redux/features/authSlice";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 
 const NavBar = () => {
   const router = useRouter();
+  const path = usePathname();
   const dispatch = useDispatch();
 
   const handleLogout = () => {
@@ -17,15 +18,17 @@ const NavBar = () => {
 
   return (
     <StyledAppBar>
-      <StyledAppBarContainer>
-        <StyledButton
-          variant="contained"
-          color="warning"
-          startIcon={<Home />}
-          onClick={() => router.push("/expenses")}
-        >
-          Início
-        </StyledButton>
+      <StyledAppBarContainer between={path !== '/expenses'}>
+        {path !== '/expenses' && (
+          <StyledButton
+            variant="contained"
+            color="warning"
+            startIcon={<Home />}
+            onClick={() => router.push("/expenses")}
+          >
+            Início
+          </StyledButton>
+        )}
         <StyledButton
           variant="contained"
           color="warning"

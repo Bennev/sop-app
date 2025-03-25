@@ -7,13 +7,13 @@ export const StyledAppBar = styled(AppBar)`
   left: 0;
 `;
 
-export const StyledAppBarContainer = styled.div`
+export const StyledAppBarContainer = styled.div<{ between?: boolean }>`
   padding: 10px 20px;
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
   align-items: center;
-
+  justify-content: ${(props) => (props.between ? 'space-between' : 'flex-end')};
+  
   .MuiButton-root {
     text-transform: none;
   }

@@ -8,20 +8,17 @@ export default async function postRegister({
   enqueueSnackbar,
 }: TPostRegister) {
   try {
-    const { data } = await axios.post(
+    await axios.post(
       'http://localhost:8080/auth/register',
       { name, login, password },
     );
 
-    return data;
+    return 'SUCCESS';
   } catch (error) {
     if (axios.isAxiosError(error)) {
-      if (error?.response?.data?.status === 'BAD_REQUEST') {
-        enqueueSnackbar('Email já cadastrado', { variant: 'error'});
-    } else {
-      enqueueSnackbar('Erro ao realizar cadastro', { variant: 'error' });
+      const errorMessage = error.response?.data?.message || 'Erro ao realizar cadastro';
+      enqueueSnackbar(errorMessage, { variant: 'error' });
     }
-  }
     return null;
   }
 }

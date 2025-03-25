@@ -5,12 +5,19 @@ import { DatePicker, DateTimePicker } from "@mui/x-date-pickers";
 import { StyledDates, StyledDialogContent } from "./styles";
 import { TExpenseWithoutId } from "@/types/TExpense";
 import { EExpenseType } from "@/enums/EExpenseType";
+import { useSnackbar } from "notistack";
+import postExpense from "@/services/expense/postExpense";
+import { useSelector } from "react-redux";
+import { RootState } from "@/redux/store";
 import { TAddExpenseModal } from "@/types/TAddExpenseModal";
 
 const AddExpenseModal = ({
   open,
   setOpen,
+  refreshData,
 }: TAddExpenseModal) => {
+  const { enqueueSnackbar } = useSnackbar();
+  const { accessToken } = useSelector((state: RootState) => state.auth);
   const [expense, setExpense] = useState<TExpenseWithoutId>({
     type: EExpenseType.BUILDING_CONSTRUCTION,
     protocol_date: '',
@@ -19,15 +26,55 @@ const AddExpenseModal = ({
     description: '',
     value: 0,
   })
+  const [isSubmitted, setIsSubmitted] = useState<boolean>(false);
 
   const handleChange = (e: any) => {
     const { name, value } = e.target;
-    setExpense({ ...expense, [name]: value });
+    const formattedValue = name === 'value' ? Number(value) : value;
+    setExpense((prev) => ({ ...prev, [name]: formattedValue }));
   }
 
   const handleDateChange = (date: Date | null, name: string) => {
-    setExpense({ ...expense, [name]: date });
+    setExpense((prev) => ({ ...prev, [name]: date }));
   }
+
+  const handleAddExpense = async () => {
+    setIsSubmitted(true);
+
+    const errors = [
+      expense.creditor === "",
+      expense.value <= 0 || String(expense.value) === '',
+      !expense.protocol_date,
+      !expense.due_date,
+    ]
+    if(errors.some((error) => error)) return enqueueSnackbar('Preencha os campos em vermelho corretamente', { variant: 'error' });
+    const response = await postExpense(accessToken, expense);
+    if (!response) return enqueueSnackbar('Erro ao adicionar despesa', { variant: 'error' });
+    enqueueSnackbar('Despesa criada com sucesso', { variant: 'success' });
+    await refreshData();
+    setOpen(false);
+    setExpense({
+      type: EExpenseType.BUILDING_CONSTRUCTION,
+      protocol_date: '',
+      due_date: '',
+      creditor: '',
+      description: '',
+      value: 0,
+    })
+    setIsSubmitted(false);
+  }
+
+  const getErrorHelperText = (
+    field: string | number,
+    validationFn: (field: string | number) => boolean,
+    errorMessage: string,
+  ) => {
+    const isError = isSubmitted && validationFn(field);
+    return {
+      error: isError,
+      helperText: isError ? errorMessage : "",
+    };
+  };
 
   return (
     <Dialog
@@ -36,16 +83,16 @@ const AddExpenseModal = ({
       fullWidth
       maxWidth="sm"
     >
-      <DialogTitle>Adicionar Despesa</DialogTitle>
+      <DialogTitle>Criar Despesa</DialogTitle>
       <StyledDialogContent>
         <FormControl>
-          <InputLabel variant="outlined" id="select">Tipo de Despesa</InputLabel>
+          <InputLabel variant="outlined" id="select">Tipo</InputLabel>
           <Select
             name="type"
             labelId="select"
             value={expense.type}
             onChange={(e) => handleChange(e)}
-            label="Tipo de Despesa"
+            label="Tipo"
           >
             
             <MenuItem value={EExpenseType.BUILDING_CONSTRUCTION}>Obra de Edificação</MenuItem>
@@ -56,56 +103,69 @@ const AddExpenseModal = ({
         <TextField
           name="creditor"
           type="text"
-          label="Credor da Despesa"
+          label="Credor"
           variant="outlined"
           onChange={(e) => handleChange(e)}
+          {...getErrorHelperText(expense.creditor, (value) => value === "", "O credor é obrigatório")}
         />
         <TextField
           name="value"
           type="number"
-          label="Valor da Despesa"
+          label="Valor"
           variant="outlined"
           onChange={(e) => handleChange(e)}
+          {...getErrorHelperText(expense.value, (value) => Number(value) <= 0 || value === "", "O valor deve ser positivo")}
         />
         <StyledDates>
           <DateTimePicker
             label="Data do Protocolo"
+            onChange={(e) => handleDateChange(e, 'protocol_date')}
             ampm={false}
             viewRenderers={{
               hours: null,
               minutes: null,
               seconds: null,
             }}
+            slotProps={{
+              textField: {
+                ...getErrorHelperText(expense.protocol_date, (date) => !date, "A data do protocolo é obrigatória"),
+              }
+            }}  
           />
           <DatePicker
             label="Data de Vencimento"
             onChange={(e) => handleDateChange(e, 'due_date')}
+            slotProps={{
+              textField: {
+                ...getErrorHelperText(expense.due_date, (date) => !date, "A data de vencimento é obrigatória"),
+              }
+            }}  
           />
         </StyledDates>
         <TextField
           name="description"
           type="text"
-          label="Descrição da Despesa"
+          label="Descrição"
           variant="outlined"
           onChange={(e) => handleChange(e)}
         />
+        <DialogActions>
+          <Button
+            variant="contained"
+            onClick={() => setOpen(false)}
+            color="inherit"
+          >
+            Fechar
+          </Button>
+          <Button
+            variant="contained"
+            color="success"
+            onClick={handleAddExpense}
+          >
+            Criar
+          </Button>
+        </DialogActions>
       </StyledDialogContent>
-      <DialogActions>
-        <Button
-          variant="contained"
-          onClick={() => setOpen(false)}
-          color="inherit"
-        >
-          Fechar
-        </Button>
-        <Button
-          variant="contained"
-          color="success"
-          onClick={() => setOpen(false)}
-        >
-          Adicionar
-        </Button>
-      </DialogActions>
     </Dialog>
   )
 }

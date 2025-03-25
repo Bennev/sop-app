@@ -8,6 +8,7 @@ export const StyledLoading = styled.div`
 `;
 
 export const StyledContainer = styled.div`
+  width: 100%;
   margin: 20px;
   display: flex;
   flex-direction: column;
@@ -32,6 +33,11 @@ export const StyledTitle = styled.h1`
 
 export const StyledSpan = styled.span`
   color: #00501b;
+`;
+
+export const StyledInfoRow = styled.div`
+  display: flex;
+  gap: 30px;
 `;
 
 export const StyledInfoTopic = styled.h2`

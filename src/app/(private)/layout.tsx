@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 "use client"
 
 import { RootState } from "@/redux/store";
@@ -15,7 +16,7 @@ export default function PrivateRoute({ children }: { children: ReactNode }) {
     if (!accessToken) {
       router.push("/");
     }
-  }, [accessToken, router]);
+  }, [accessToken]);
 
   if (!accessToken) return null;
 

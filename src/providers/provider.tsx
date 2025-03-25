@@ -12,6 +12,7 @@ import { Close } from "@mui/icons-material";
 import StyledJsxRegistry from "@/providers/registry";
 import GlobalStyle from "@/assets/styles/global";
 import { store } from "@/redux/store";
+import { ptBR } from "date-fns/locale";
 
 const theme = createTheme(muiTheme);
 const snackbarProviderRef = createRef<SnackbarProvider>();
@@ -23,7 +24,7 @@ export function Providers({ children }: { children: ReactNode }) {
   return (
     <ThemeProvider theme={theme}>
       <Provider store={store}>
-        <LocalizationProvider dateAdapter={AdapterDateFns}>
+        <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={ptBR}>
           <StyledJsxRegistry>
             <GlobalStyle />
             <SnackbarProvider

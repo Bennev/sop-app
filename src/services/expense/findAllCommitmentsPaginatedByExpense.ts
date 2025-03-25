@@ -1,11 +1,11 @@
 import { TFindAllExpensesPaginated } from "@/types/TFindAllExpensesPaginated";
-import { TResponseFindAllExpensesPaginated } from "@/types/TResponseFindAllExpensesPaginated";
+import { TResponseFindAllPaginated } from "@/types/TResponseFindAll";
 import axios from "axios";
 
 export default async function findAllExpensesPaginated({
   accessToken,
   page,
-}: TFindAllExpensesPaginated): Promise<TResponseFindAllExpensesPaginated | null> {
+}: TFindAllExpensesPaginated): Promise<TResponseFindAllPaginated | null> {
   try {
     const { data } = await axios.get(
       'http://localhost:8080/expense',

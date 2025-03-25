@@ -13,8 +13,8 @@ const DataTable = ({
   setPage,
   labelAddButton,
   handleAdd,
-  handleView,
   handleDelete,
+  handleView,
 }: TDataTable) => {
 
   const columnsToShow = [

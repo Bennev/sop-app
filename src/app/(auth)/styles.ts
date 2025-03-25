@@ -3,6 +3,12 @@ import { Button } from "@mui/material";
 import Link from "next/link";
 import styled from "styled-components";
 
+export const StyledPage = styled.div`
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+`;
+
 export const StyledContainer = styled.div`
   width: 500px;
   padding: 20px 40px;
@@ -25,6 +31,13 @@ export const StyledTitle = styled.h1`
   margin: 0;
   font-size: 2rem;
   color: #00501b;
+`;
+
+export const StyledSubtitle = styled.h2`
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 400;
+  text-align: center;
 `;
 
 export const StyledTextFields = styled.div`
