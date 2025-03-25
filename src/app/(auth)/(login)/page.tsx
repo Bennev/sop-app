@@ -33,7 +33,7 @@ export default function Home() {
     try {
       const response = await postLogin({ login: auth.login, password: auth.password })
       if (!response) {
-        enqueueSnackbar('Usuário ou senha inválidos', { variant: 'error' });
+        enqueueSnackbar('Usuário e/ou senha inválidos', { variant: 'error' });
         return;
       }
       dispatch(authActions.login({

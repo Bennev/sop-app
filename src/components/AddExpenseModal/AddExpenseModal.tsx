@@ -64,6 +64,19 @@ const AddExpenseModal = ({
     setIsSubmitted(false);
   }
 
+  const handleClose = () => {
+    setOpen(false);
+    setExpense({
+      type: EExpenseType.BUILDING_CONSTRUCTION,
+      protocol_date: '',
+      due_date: '',
+      creditor: '',
+      description: '',
+      value: 0,
+    })
+    setIsSubmitted(false);
+  }
+
   const getErrorHelperText = (
     field: string | number,
     validationFn: (field: string | number) => boolean,
@@ -79,7 +92,7 @@ const AddExpenseModal = ({
   return (
     <Dialog
       open={open}
-      onClose={() => setOpen(false)}
+      onClose={handleClose}
       fullWidth
       maxWidth="sm"
     >
@@ -91,7 +104,7 @@ const AddExpenseModal = ({
             name="type"
             labelId="select"
             value={expense.type}
-            onChange={(e) => handleChange(e)}
+            onChange={handleChange}
             label="Tipo"
           >
             
@@ -105,7 +118,7 @@ const AddExpenseModal = ({
           type="text"
           label="Credor"
           variant="outlined"
-          onChange={(e) => handleChange(e)}
+          onChange={handleChange}
           {...getErrorHelperText(expense.creditor, (value) => value === "", "O credor é obrigatório")}
         />
         <TextField
@@ -113,7 +126,7 @@ const AddExpenseModal = ({
           type="number"
           label="Valor"
           variant="outlined"
-          onChange={(e) => handleChange(e)}
+          onChange={handleChange}
           {...getErrorHelperText(expense.value, (value) => Number(value) <= 0 || value === "", "O valor deve ser positivo")}
         />
         <StyledDates>
@@ -147,12 +160,12 @@ const AddExpenseModal = ({
           type="text"
           label="Descrição"
           variant="outlined"
-          onChange={(e) => handleChange(e)}
+          onChange={handleChange}
         />
         <DialogActions>
           <Button
             variant="contained"
-            onClick={() => setOpen(false)}
+            onClick={handleClose}
             color="inherit"
           >
             Fechar

@@ -11,10 +11,10 @@ import { CircularProgress } from "@mui/material";
 import findOneExpense from "@/services/expense/findOneExpense";
 import { expenseActions } from "@/redux/features/expenseSlice";
 import { useRouter } from "next/navigation";
-import AddExpenseModal from "@/components/Expense/AddExpenseModal/AddExpenseModal";
 import deleteExpense from "@/services/expense/deleteExpense";
 import { TExpenseColumns } from "@/types/TColumns";
 import findAllExpensesPaginated from "@/services/expense/findAllCommitmentsPaginatedByExpense";
+import AddExpenseModal from "@/components/AddExpenseModal/AddExpenseModal";
 
 export default function Expenses() {
   const columns: TExpenseColumns[] = [

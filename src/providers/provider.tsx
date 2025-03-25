@@ -35,6 +35,9 @@ export function Providers({ children }: { children: ReactNode }) {
               }}
               maxSnack={3}
               ref={snackbarProviderRef}
+              SnackbarProps={{
+                style: { maxWidth: "400px" },
+              }}
               action={(key: SnackbarKey) => (
                 <IconButton onClick={() => handleDismissSnackbar(key)}>
                   <Close style={{ color: "#FFFFFF" }} />

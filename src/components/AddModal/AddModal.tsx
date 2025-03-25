@@ -65,6 +65,16 @@ const AddModal = ({
     setIsSubmitted(false);
   }
 
+  const handleClose = () => {
+    setOpen(false);
+    setCommitment({
+      date: '',
+      value: 0,
+      note: '',
+    })
+    setIsSubmitted(false);
+  }
+
   const getErrorHelperText = (
     field: string | number,
     validationFn: (field: string | number) => boolean,
@@ -80,7 +90,7 @@ const AddModal = ({
   return (
     <Dialog
       open={open}
-      onClose={() => setOpen(false)}
+      onClose={handleClose}
       fullWidth
       maxWidth="sm"
     >
@@ -91,7 +101,7 @@ const AddModal = ({
           type="number"
           label="Valor"
           variant="outlined"
-          onChange={(e) => handleChange(e)}
+          onChange={handleChange}
           {...getErrorHelperText(commitmentOrPayment.value, (value) => Number(value) <= 0 || value === "", "O valor deve ser positivo")}
         />
         <DatePicker
@@ -108,12 +118,12 @@ const AddModal = ({
           type="text"
           label="Observação"
           variant="outlined"
-          onChange={(e) => handleChange(e)}
+          onChange={handleChange}
         />
         <DialogActions>
           <Button
             variant="contained"
-            onClick={() => setOpen(false)}
+            onClick={handleClose}
             color="inherit"
           >
             Fechar
