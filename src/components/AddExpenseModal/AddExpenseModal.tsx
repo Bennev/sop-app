@@ -1,15 +1,15 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from "react";
-import { Button, Dialog, DialogActions, DialogTitle, FormControl, InputLabel, MenuItem, Select, TextField } from "@mui/material";
+import { Button, Dialog, DialogActions, DialogTitle, FormControl, InputAdornment, InputLabel, MenuItem, Select, TextField } from "@mui/material";
 import { DatePicker, DateTimePicker } from "@mui/x-date-pickers";
 import { StyledDates, StyledDialogContent } from "./styles";
-import { TExpenseWithoutIdAndProtocolNumber } from "@/types/TExpense";
 import { EExpenseType } from "@/enums/EExpenseType";
 import { useSnackbar } from "notistack";
 import postExpense from "@/services/expense/postExpense";
 import { useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
 import { TAddExpenseModal } from "@/types/TAddExpenseModal";
+import { TExpenseWithoutAutoFields } from "@/types/TExpense";
 
 const AddExpenseModal = ({
   open,
@@ -18,7 +18,7 @@ const AddExpenseModal = ({
 }: TAddExpenseModal) => {
   const { enqueueSnackbar } = useSnackbar();
   const { accessToken } = useSelector((state: RootState) => state.auth);
-  const [expense, setExpense] = useState<TExpenseWithoutIdAndProtocolNumber>({
+  const [expense, setExpense] = useState<TExpenseWithoutAutoFields>({
     type: EExpenseType.BUILDING_CONSTRUCTION,
     protocol_date: '',
     due_date: '',
@@ -127,6 +127,13 @@ const AddExpenseModal = ({
           label="Valor"
           variant="outlined"
           onChange={handleChange}
+          slotProps={{ input: {
+            startAdornment: (
+              <InputAdornment position="start">
+                R$
+              </InputAdornment>
+            )
+          }}}
           {...getErrorHelperText(expense.value, (value) => Number(value) <= 0 || value === "", "O valor deve ser positivo")}
         />
         <StyledDates>

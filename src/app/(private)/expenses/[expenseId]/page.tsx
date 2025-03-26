@@ -13,10 +13,13 @@ import findAllCommitmentsPaginatedByExpense from "@/services/commitment/findAllC
 import deleteCommitment from "@/services/commitment/deleteCommitment";
 import findOneCommitment from "@/services/commitment/findOneCommitment";
 import { commitmentActions } from "@/redux/features/commitmentSlice";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { TCommitmentOrPaymentColumns } from "@/types/TColumns";
 import { TCommitmentOrPayment } from "@/types/TCommitmentOrPayment";
 import AddModal from "@/components/AddModal/AddModal";
+import findOneExpense from "@/services/expense/findOneExpense";
+import { expenseActions } from "@/redux/features/expenseSlice";
+import StatusChip from "@/components/StatusChip/StatusChip";
 
 export default function ExpenseDetails() {
   const columns: TCommitmentOrPaymentColumns[] = [
@@ -26,6 +29,8 @@ export default function ExpenseDetails() {
     { key: 'note', label: 'Observação' },
     { key: 'payment_count', label: 'Qtd de Pagamentos' },
   ];
+  const path = usePathname();
+  const expenseId = path.split('/')[2];
   const expense = useSelector((state: RootState) => state.expense);
   const user = useSelector((state: RootState) => state.auth);
   const dispatch = useDispatch();
@@ -56,6 +61,15 @@ export default function ExpenseDetails() {
     enqueueSnackbar('Empenho deletado com sucesso', { variant: 'success' });
     setPage(0);
     getAllCommitmentsPaginatedByExpense();
+    getOneExpense(Number(expenseId));
+  }
+
+  const getOneExpense = async (id: number) => {
+    setIsLoading(true);
+    const response = await findOneExpense({ accessToken: user.accessToken, id });
+    if (!response) return null;
+    dispatch(expenseActions.setExpense(response))
+    setIsLoading(false);
   }
 
   const getAllCommitmentsPaginatedByExpense = async () => {
@@ -79,6 +93,10 @@ export default function ExpenseDetails() {
   useEffect(() => {
     getAllCommitmentsPaginatedByExpense();
   }, [expense.id, page])
+
+  useEffect(() => {
+    getOneExpense(Number(expenseId));
+  }, [])
 
   return (
     <>
@@ -122,12 +140,18 @@ export default function ExpenseDetails() {
                 </StyledInfoDetail>
               </StyledInfoTopic>
             </StyledInfoRow>
-            <StyledInfoTopic>
-              {'Valor: '}
-              <StyledInfoDetail>
-                R$ {expense.value.toFixed(2).replace(".", ",")}
-              </StyledInfoDetail>
-            </StyledInfoTopic>
+            <StyledInfoRow>
+              <StyledInfoTopic>
+                {'Status: '}
+                <StatusChip status={expense.status} />
+              </StyledInfoTopic>
+              <StyledInfoTopic>
+                {'Valor: '}
+                <StyledInfoDetail>
+                  R$ {expense.value.toFixed(2).replace(".", ",")}
+                </StyledInfoDetail>
+              </StyledInfoTopic>
+            </StyledInfoRow>
             <StyledInfoTopic>
               {'Descrição: '}
               <StyledInfoDetail>
@@ -156,7 +180,10 @@ export default function ExpenseDetails() {
         entity="Empenho"
         open={openModal}
         setOpen={setOpenModal}
-        refreshData={getAllCommitmentsPaginatedByExpense}
+        refreshData={() => {
+          getAllCommitmentsPaginatedByExpense()
+          getOneExpense(Number(expenseId));
+        }}
         id={expense.id}
       />
     </>

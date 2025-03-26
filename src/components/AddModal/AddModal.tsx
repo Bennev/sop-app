@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from "react";
-import { Button, Dialog, DialogActions, DialogTitle, TextField } from "@mui/material";
+import { Button, Dialog, DialogActions, DialogTitle, InputAdornment, TextField } from "@mui/material";
 import { DatePicker } from "@mui/x-date-pickers";
 import { useSnackbar } from "notistack";
 import { useSelector } from "react-redux";
@@ -102,6 +102,13 @@ const AddModal = ({
           label="Valor"
           variant="outlined"
           onChange={handleChange}
+          slotProps={{ input: {
+            startAdornment: (
+              <InputAdornment position="start">
+                R$
+              </InputAdornment>
+            )
+          }}}
           {...getErrorHelperText(
             commitmentOrPayment.value,
             (value) => Number(value) <= 0 || value === "",

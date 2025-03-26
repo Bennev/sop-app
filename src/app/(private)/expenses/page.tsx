@@ -1,15 +1,13 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 "use client"
 import { RootState } from "@/redux/store";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { StyledContainer, StyledInfoDetail, StyledInfoTopic, StyledLoading, StyledSection, StyledSpan, StyledTitle } from "./styles";
 import DataTable from "@/components/DataTable/DataTable";
 import { TExpense } from "@/types/TExpense";
 import { useEffect, useState } from "react";
 import { useSnackbar } from "notistack";
 import { CircularProgress } from "@mui/material";
-import findOneExpense from "@/services/expense/findOneExpense";
-import { expenseActions } from "@/redux/features/expenseSlice";
 import { useRouter } from "next/navigation";
 import deleteExpense from "@/services/expense/deleteExpense";
 import { TExpenseColumns } from "@/types/TColumns";
@@ -29,7 +27,6 @@ export default function Expenses() {
     { key: 'commitment_count', label: 'Qtd de Empenhos' },
   ];
   const user = useSelector((state: RootState) => state.auth);
-  const dispatch = useDispatch();
   const router = useRouter();
   const { enqueueSnackbar } = useSnackbar();
   const [expenses, setExpenses] = useState<TExpense[]>([]);
@@ -39,9 +36,6 @@ export default function Expenses() {
   const [openModal, setOpenModal] = useState<boolean>(false);
 
   const handleView = async (id: number) => {
-    const response = await findOneExpense({ accessToken: user.accessToken, id });
-    if (!response) return null;
-    dispatch(expenseActions.setExpense(response))
     router.push(`/expenses/${id}`);
   }
 
