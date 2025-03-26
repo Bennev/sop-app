@@ -1,36 +1,100 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# App de Gestão de Despesas - Teste Técnico
 
-## Getting Started
+Este é o front-end da aplicação Gestão de Despesas, desenvolvido para um teste técnico. Trata-se de uma aplicação **Next.js** que se conecta à API REST desenvolvida em **Spring Boot** para gerenciar despesas (**Expenses**), empenhos (**Commitments**) e pagamentos (**Payments**).
 
-First, run the development server:
+## 📑 Sumário
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- [📌 Visão Geral](#-visão-geral)
+    - [O Desafio](#o-desafio)
+    - [Tecnologias Utilizadas](#tecnologias-utilizadas)
+- [🚀 Como Executar o Projeto](#-como-executar-o-projeto)
+- [🛠 Funcionalidades da Aplicação](#-funcionalidades-da-aplicação)
+- [🔗 Link do Deploy](#-link-do-deploy)
+- [👨‍💻 Autor](#-autor)
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+---
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 📌 Visão Geral
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### O Desafio
 
-## Learn More
+O objetivo deste projeto foi desenvolver a interface de usuário para um sistema de gestão de despesas, empenhos e pagamentos. A aplicação front-end se comunica com uma API RESTful, utilizando autenticação JWT para acessar os dados e permitindo ao usuário:
 
-To learn more about Next.js, take a look at the following resources:
+✔️ Visualizar, criar e excluir despesas.  
+✔️ Visualizar, criar e excluir empenhos relacionados a despesas.  
+✔️ Visualizar, criar e excluir pagamentos relacionados a empenhos.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Tecnologias Utilizadas
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Este projeto foi desenvolvido com as seguintes tecnologias:
 
-## Deploy on Vercel
+- **Next.js**
+- **React** 
+- **Redux**
+- **Material UI**
+- **Axios**
+- **Date-fns**
+- **TypeScript**
+- **Styled-components**
+- **Notistack**
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+---
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 🚀 Como Executar o Projeto
+
+### ✅ Pré-requisitos
+
+Antes de iniciar, você precisará ter instalado:
+
+- **Node.js** (recomendado: versão 16.x ou superior)
+
+### 🚀 Rodando a aplicação
+
+1. Clone o repositório:
+    ```sh
+    git clone https://github.com/Bennev/sop-app.git
+    ```
+
+2. Acesse o diretório do projeto:
+    ```sh
+    cd sop-app
+    ```
+
+3. Instale as dependências do projeto com o npm:
+    ```sh
+    npm install
+    ```
+
+4. Inicie o servidor de desenvolvimento:
+    ```sh
+    npm run dev
+    ```
+
+5. A aplicação estará disponível em:
+    ```sh
+    http://localhost:3000
+    ```
+
+---
+
+## 🛠 Funcionalidades da Aplicação
+
+- **Autenticação de Usuário**: A aplicação permite o login e o registro de usuários via JWT.
+- **Gestão de Despesas**: Visualize, crie e exclua despesas.
+- **Gestão de Empenhos**: Crie, visualize e exclua empenhos relacionados às despesas.
+- **Gestão de Pagamentos**: Crie, visualize e exclua pagamentos relacionados aos empenhos.
+
+---
+
+## 🔗 Link do Deploy
+
+- **Live Site URL**: [@Render](https://sop-app-lli2.onrender.com)  
+
+---
+
+## 👨‍💻 Autor
+
+- GitHub: [Bennev](https://github.com/Bennev)
+- LinkedIn: [Matheus Benevides](http://linkedin.com/in/matheusbenevidesmilitao)
+
+#### 🚀 Feito com 💙 para o teste técnico!
