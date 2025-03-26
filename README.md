@@ -60,6 +60,11 @@ Antes de iniciar, você precisará ter instalado:
     cd sop-app
     ```
 
+3. Crie um arquivo `.env.local` na raiz do projeto e adicione a URL da API nele. Por exemplo:
+    ```sh
+    NEXT_PUBLIC_API_URL=http://localhost:8080
+    ```
+
 3. Instale as dependências do projeto com o npm:
     ```sh
     npm install
@@ -89,6 +94,8 @@ Antes de iniciar, você precisará ter instalado:
 ## 🔗 Link do Deploy
 
 - **Live Site URL**: [@Render](https://sop-app-lli2.onrender.com)  
+
+> ⚠️ **Aviso:** Recomenda-se rodar a aplicação em ambiente local, visto que os deploys realizados de forma gratuita nessas plataformas costumam possuir muitas limitações e também apresentam lentidão.
 
 ---
 
