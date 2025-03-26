@@ -7,7 +7,7 @@ export default async function postLogin({
 }: TPostLogin) {
   try {
     const { data } = await axios.post(
-      'http://localhost:8080/auth/login',
+      `${process.env.NEXT_PUBLIC_API_URL}/auth/login`,
       { login, password },
     );
 

@@ -7,7 +7,7 @@ export default async function findOneCommitment(
 ): Promise<TCommitmentOrPayment | null> {
   try {
     const { data } = await axios.get(
-      `http://localhost:8080/commitment/${id}`,
+      `${process.env.NEXT_PUBLIC_API_URL}/commitment/${id}`,
       {
         headers: {
           Authorization: `Bearer ${accessToken}`

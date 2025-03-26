@@ -8,7 +8,7 @@ export default async function findOneExpense({
 }: TFindOneExpense): Promise<TExpense | null> {
   try {
     const { data } = await axios.get(
-      `http://localhost:8080/expense/${id}`,
+      `${process.env.NEXT_PUBLIC_API_URL}/expense/${id}`,
       {
         headers: {
           Authorization: `Bearer ${accessToken}`

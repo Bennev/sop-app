@@ -5,6 +5,7 @@ import { ptBR } from "date-fns/locale";
 import { format } from "date-fns";
 import { IconButton, Tooltip } from "@mui/material";
 import StatusChip from "../StatusChip/StatusChip";
+import { EExpenseStatus } from "@/enums/EExpenseStatus";
 
 const DataTableCell = ({
   column_key,
@@ -56,7 +57,7 @@ const DataTableCell = ({
   }
 
   if (column_key === 'status') {
-    return <StatusChip status={value} />;
+    return <StatusChip status={String(value) as EExpenseStatus} />;
   }
 
   return <StyledInfo>{value ?? ''}</StyledInfo>;

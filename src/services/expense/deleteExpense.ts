@@ -8,7 +8,7 @@ export default async function deleteExpense(
 ) {
   try {
     await axios.delete(
-      `http://localhost:8080/expense/${id}`,
+      `${process.env.NEXT_PUBLIC_API_URL}/expense/${id}`,
       {
         headers: {
           Authorization: `Bearer ${accessToken}`

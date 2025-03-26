@@ -7,7 +7,7 @@ export default async function deletePayment(
   enqueueSnackbar: EnqueueSnackbar) {
   try {
     await axios.delete(
-      `http://localhost:8080/payment/${id}`,
+      `${process.env.NEXT_PUBLIC_API_URL}/payment/${id}`,
       {
         headers: {
           Authorization: `Bearer ${accessToken}`

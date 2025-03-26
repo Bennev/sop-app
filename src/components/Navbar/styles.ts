@@ -7,12 +7,12 @@ export const StyledAppBar = styled(AppBar)`
   left: 0;
 `;
 
-export const StyledAppBarContainer = styled.div<{ between?: boolean }>`
+export const StyledAppBarContainer = styled.div<{ $between?: boolean }>`
   padding: 10px 20px;
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: ${(props) => (props.between ? 'space-between' : 'flex-end')};
+  justify-content: ${(props) => (props.$between ? 'space-between' : 'flex-end')};
   
   .MuiButton-root {
     text-transform: none;

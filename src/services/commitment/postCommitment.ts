@@ -9,7 +9,7 @@ export default async function postCommitment(
 ): Promise<TCommitmentOrPayment | null> {
   try {
     const { data } = await axios.post(
-      `http://localhost:8080/commitment`,
+      `${process.env.NEXT_PUBLIC_API_URL}/commitment`,
       { ...body },
       {
         headers: {

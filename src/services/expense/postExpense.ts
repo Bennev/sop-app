@@ -4,7 +4,7 @@ import axios from "axios";
 export default async function postExpense(accessToken: string, body: TExpenseWithoutAutoFields): Promise<TExpense | null> {
   try {
     const { data } = await axios.post(
-      `http://localhost:8080/expense`,
+      `${process.env.NEXT_PUBLIC_API_URL}/expense`,
       { ...body },
       {
         headers: {

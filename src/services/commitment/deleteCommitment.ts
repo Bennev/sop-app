@@ -7,7 +7,7 @@ export default async function deleteCommitment(
   enqueueSnackbar: EnqueueSnackbar) {
   try {
     await axios.delete(
-      `http://localhost:8080/commitment/${id}`,
+      `${process.env.NEXT_PUBLIC_API_URL}/commitment/${id}`,
       {
         headers: {
           Authorization: `Bearer ${accessToken}`

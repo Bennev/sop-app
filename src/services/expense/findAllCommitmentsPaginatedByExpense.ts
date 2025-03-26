@@ -8,7 +8,7 @@ export default async function findAllExpensesPaginated({
 }: TFindAllExpensesPaginated): Promise<TResponseFindAllPaginated | null> {
   try {
     const { data } = await axios.get(
-      'http://localhost:8080/expense',
+      `${process.env.NEXT_PUBLIC_API_URL}/expense`,
       {
         headers: {
           Authorization: `Bearer ${accessToken}`

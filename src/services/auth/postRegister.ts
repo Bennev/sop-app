@@ -9,7 +9,7 @@ export default async function postRegister({
 }: TPostRegister) {
   try {
     await axios.post(
-      'http://localhost:8080/auth/register',
+      `${process.env.NEXT_PUBLIC_API_URL}/auth/register`,
       { name, login, password },
     );
 

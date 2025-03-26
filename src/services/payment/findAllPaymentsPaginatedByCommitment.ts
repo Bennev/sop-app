@@ -8,7 +8,7 @@ export default async function findAllPaymentsPaginatedByCommitment(
 ): Promise<TResponseFindAllPaginated | null> {
   try {
     const { data } = await axios.get(
-      `http://localhost:8080/payment/commitment/${commitmentId}`,
+      `${process.env.NEXT_PUBLIC_API_URL}/payment/commitment/${commitmentId}`,
       {
         headers: {
           Authorization: `Bearer ${accessToken}`

@@ -5,21 +5,20 @@ import { CircularProgress } from "@mui/material";
 import { StyledContainer, StyledInfoDetail, StyledInfoRow, StyledInfoTopic, StyledLoading, StyledSection, StyledTitle } from "../styles";
 import { RootState } from "@/redux/store";
 import { useDispatch, useSelector } from "react-redux";
-import { ptBR } from "date-fns/locale";
-import { format } from "date-fns";
 import DataTable from "@/components/DataTable/DataTable";
 import { useSnackbar } from "notistack";
 import findAllCommitmentsPaginatedByExpense from "@/services/commitment/findAllCommitmentsPaginated";
 import deleteCommitment from "@/services/commitment/deleteCommitment";
 import findOneCommitment from "@/services/commitment/findOneCommitment";
 import { commitmentActions } from "@/redux/features/commitmentSlice";
-import { usePathname, useRouter } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { TCommitmentOrPaymentColumns } from "@/types/TColumns";
 import { TCommitmentOrPayment } from "@/types/TCommitmentOrPayment";
 import AddModal from "@/components/AddModal/AddModal";
 import findOneExpense from "@/services/expense/findOneExpense";
 import { expenseActions } from "@/redux/features/expenseSlice";
 import StatusChip from "@/components/StatusChip/StatusChip";
+import { formatDate } from "@/utils/formatDate";
 
 export default function ExpenseDetails() {
   const columns: TCommitmentOrPaymentColumns[] = [
@@ -29,12 +28,12 @@ export default function ExpenseDetails() {
     { key: 'note', label: 'Observação' },
     { key: 'payment_count', label: 'Qtd de Pagamentos' },
   ];
-  const path = usePathname();
-  const expenseId = path.split('/')[2];
   const expense = useSelector((state: RootState) => state.expense);
   const user = useSelector((state: RootState) => state.auth);
   const dispatch = useDispatch();
   const router = useRouter();
+  const params = useParams();
+  const expenseId = params?.expenseId;
   const { enqueueSnackbar } = useSnackbar();
   const [commitments, setCommitments] = useState<TCommitmentOrPayment[]>([]);
   const [totalPages, setTotalPages] = useState<number>(0);
@@ -96,8 +95,8 @@ export default function ExpenseDetails() {
 
   useEffect(() => {
     getOneExpense(Number(expenseId));
-  }, [])
-
+  }, [expenseId])
+  
   return (
     <>
       {isLoading ? (
@@ -130,13 +129,13 @@ export default function ExpenseDetails() {
               <StyledInfoTopic>
                 {'Data do Protocolo: '}
                 <StyledInfoDetail>
-                  {format(expense.protocol_date, 'HH:mm dd/MM/yyyy', { locale: ptBR })}
+                  {formatDate(expense.protocol_date, 'HH:mm dd/MM/yyyy')}
                 </StyledInfoDetail>
               </StyledInfoTopic>
               <StyledInfoTopic>
                 {'Data de Vencimento: '}
                 <StyledInfoDetail>
-                  {format(expense.due_date, 'dd/MM/yyyy', { locale: ptBR })}
+                  {formatDate(expense.due_date, 'dd/MM/yyyy')}
                 </StyledInfoDetail>
               </StyledInfoTopic>
             </StyledInfoRow>

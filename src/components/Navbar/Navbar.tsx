@@ -18,7 +18,7 @@ const NavBar = () => {
 
   return (
     <StyledAppBar>
-      <StyledAppBarContainer between={path !== '/expenses'}>
+      <StyledAppBarContainer $between={path !== '/expenses'}>
         {path !== '/expenses' && (
           <StyledButton
             variant="contained"
