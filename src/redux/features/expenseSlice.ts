@@ -1,3 +1,4 @@
+import { EExpenseStatus } from '@/enums/EExpenseStatus';
 import { EExpenseType } from '@/enums/EExpenseType';
 import { TExpense } from '@/types/TExpense';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
@@ -11,6 +12,7 @@ const initialState: TExpense = {
   value: 0,
   description: '',
   protocol_number: '',
+  status: EExpenseStatus.WAITING_COMMITMENT,
 }
 
 export const expenseSlice = createSlice({
@@ -26,6 +28,7 @@ export const expenseSlice = createSlice({
       state.value = action.payload.value;
       state.description = action.payload.description;
       state.protocol_number = action.payload.protocol_number;
+      state.status = action.payload.status;
     }
   },
 })

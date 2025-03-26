@@ -1,3 +1,4 @@
+import { EExpenseStatus } from "@/enums/EExpenseStatus";
 import { EExpenseType } from "@/enums/EExpenseType";
 
 export type TExpense = {
@@ -9,6 +10,7 @@ export type TExpense = {
   description: string;
   value: number;
   protocol_number: string;
+  status: EExpenseStatus;
 }
 
-export type TExpenseWithoutIdAndProtocolNumber = Omit<TExpense, 'id' | 'protocol_number'>;
+export type TExpenseWithoutAutoFields = Omit<TExpense, 'id' | 'protocol_number' | 'status'>;

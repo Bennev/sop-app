@@ -10,4 +10,3 @@ export const StyledInfo = styled.span`
   font-size: 14px;
   word-wrap: break-word;
 `;
-

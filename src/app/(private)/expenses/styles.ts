@@ -37,12 +37,16 @@ export const StyledSpan = styled.span`
 
 export const StyledInfoRow = styled.div`
   display: flex;
+  align-items: center;
   gap: 30px;
 `;
 
 export const StyledInfoTopic = styled.h2`
   max-width: 500px;
   margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 5px;
   font-size: 1rem;
 `;
 

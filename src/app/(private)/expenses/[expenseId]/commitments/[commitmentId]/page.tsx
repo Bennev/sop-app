@@ -34,7 +34,7 @@ export default function CommitmentDetails() {
   const handleDelete = async (id: number) => {
     const response = await deletePayment(accessToken, id, enqueueSnackbar);
     if (!response) return null;
-    enqueueSnackbar('Empenho deletado com sucesso', { variant: 'success' });
+    enqueueSnackbar('Pagamento deletado com sucesso', { variant: 'success' });
     setPage(0);
     getAllPaymentsPaginatedByCommitment();
   }

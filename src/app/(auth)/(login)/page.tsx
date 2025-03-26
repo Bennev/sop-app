@@ -2,7 +2,7 @@
 
 import { ChangeEvent, useMemo, useState } from "react";
 import { CircularProgress, IconButton, InputAdornment, TextField } from "@mui/material";
-import { StyledButton, StyledContainer, StyledFooter, StyledLink, StyledTextFields, StyledTitle } from "../styles";
+import { StyledButton, StyledContainer, StyledFooter, StyledLink, StyledSubtitle, StyledTextFields, StyledTitle } from "../styles";
 import { TLogin } from "@/types/TLogin";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { useSnackbar } from "notistack";
@@ -55,7 +55,8 @@ export default function Home() {
 
   return (
     <StyledContainer>
-      <StyledTitle>Bem Vindo</StyledTitle>
+      <StyledTitle>Bem-vindo!</StyledTitle>
+      <StyledSubtitle>Informe seu login e senha</StyledSubtitle>
       <StyledTextFields>
         <TextField
           name="login"

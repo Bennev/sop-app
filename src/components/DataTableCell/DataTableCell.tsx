@@ -4,6 +4,7 @@ import { Delete, Visibility } from "@mui/icons-material";
 import { ptBR } from "date-fns/locale";
 import { format } from "date-fns";
 import { IconButton, Tooltip } from "@mui/material";
+import StatusChip from "../StatusChip/StatusChip";
 
 const DataTableCell = ({
   column_key,
@@ -17,7 +18,7 @@ const DataTableCell = ({
     OTHERS: "Outros",
   };
 
-  const value = row[column_key as keyof typeof row]; 
+  const value = row[column_key as keyof typeof row];
 
   if (column_key === "actions") {
     return (
@@ -52,6 +53,10 @@ const DataTableCell = ({
   if (column_key === "value") {
     const number = Number(value);
     return <StyledInfo>R$ {number.toFixed(2).replace(".", ",")}</StyledInfo>;
+  }
+
+  if (column_key === 'status') {
+    return <StatusChip status={value} />;
   }
 
   return <StyledInfo>{value ?? ''}</StyledInfo>;

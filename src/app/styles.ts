@@ -6,5 +6,5 @@ export const StyledMain = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: #F2F2F2;
+  background-color: #E0E0E0;
 `;

@@ -20,6 +20,7 @@ export default function Expenses() {
   const columns: TExpenseColumns[] = [
     { key: 'protocol_number', label: 'Nº do Protocolo' },
     { key: 'type', label: 'Tipo' },
+    { key: 'status', label: 'Status' },
     { key: 'protocol_date', label: 'Data do Protocolo' },
     { key: 'due_date', label: 'Data de Vencimento' },
     { key: 'creditor', label: 'Credor' },
@@ -85,6 +86,7 @@ export default function Expenses() {
             <StyledTitle>
               {'Olá, '}
               <StyledSpan>{user.name}</StyledSpan>
+              !
             </StyledTitle>
             <StyledInfoTopic>
               {'Email: '}

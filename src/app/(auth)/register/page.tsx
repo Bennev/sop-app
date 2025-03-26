@@ -2,7 +2,7 @@
 
 import { ChangeEvent, useMemo, useState } from "react";
 import { Alert, CircularProgress, IconButton, InputAdornment, TextField } from "@mui/material";
-import { StyledLink, StyledButton, StyledContainer, StyledFooter, StyledTextFields, StyledTitle } from "../styles";
+import { StyledLink, StyledButton, StyledContainer, StyledFooter, StyledTextFields, StyledTitle, StyledSubtitle } from "../styles";
 import { TRegister } from "@/types/TRegister";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { useSnackbar } from "notistack";
@@ -75,6 +75,7 @@ export default function Register() {
   return (
     <StyledContainer>
       <StyledTitle>Registre-se</StyledTitle>
+      <StyledSubtitle>Preencha os campos abaixo</StyledSubtitle>
       <StyledTextFields>
       <TextField
           name="name"
