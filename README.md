@@ -37,6 +37,7 @@ Este projeto foi desenvolvido com as seguintes tecnologias:
 - **TypeScript**
 - **Styled-components**
 - **Notistack**
+- **PWA**
 
 ---
 
