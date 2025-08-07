@@ -1,12 +1,12 @@
 import { Lexend } from "next/font/google";
-import { StyledMain } from "./styles";
 import { Providers } from "@/providers/provider";
 import { ReactNode } from "react";
+import { StyledMain } from "./styles";
 
 const lexend = Lexend({
-  weight: ['400', '500', '600', '700'],
-  subsets: ['latin'],
-})
+  weight: ["400", "500", "600", "700"],
+  subsets: ["latin"],
+});
 
 export default function RootLayout({
   children,
@@ -16,7 +16,8 @@ export default function RootLayout({
   return (
     <html lang="pt-BR">
       <head>
-        <link rel="shortcut icon" href="/vercel.svg" />
+        <link rel="manifest" href="/manifest.json" />
+        <link rel="shortcut icon" href="/favicon.ico" />
         <meta
           name="viewport"
           content="minimum-scale=1, initial-scale=1, width=device-width, user-scalable=no"
@@ -25,9 +26,7 @@ export default function RootLayout({
       </head>
       <body className={lexend.className}>
         <Providers>
-          <StyledMain>
-            {children}
-          </StyledMain>
+          <StyledMain>{children}</StyledMain>
         </Providers>
       </body>
     </html>
